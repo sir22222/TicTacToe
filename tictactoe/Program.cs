@@ -4,26 +4,28 @@
     {
         static void Main()
         {
-            bool running = true;
             Console.CursorVisible = false;
             States game_state = States.Start,
                 last_game_state = States.Start;
             Board board = new();
-            Users[] users = [];
-            while (running)
+            GameModes gameMode = GameModes.None;
+            GameModes winner = new();
+
+
+            while (game_state is not States.Exit)
             {
 
                 switch (game_state)
                 {
                     case States.Start:
                     case States.Menu:
-                        game_state = StateHandler.Menu(ref running,ref last_game_state);
+                        game_state = StateHandler.Menu(ref last_game_state);
                         break;
                     case States.Setup:
-                        game_state = StateHandler.Setup(ref running,ref last_game_state, ref board, out users);
+                        game_state = StateHandler.Setup(ref last_game_state, ref board, ref gameMode);
                         break;
                     case States.Running:
-                        game_state = StateHandler.Running(ref running,ref last_game_state, ref board,users);
+                        game_state = StateHandler.Running(ref last_game_state, ref board, gameMode, ref winner);
                         break;
                     default:
                         break;

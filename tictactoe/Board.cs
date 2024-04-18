@@ -1,6 +1,6 @@
 ﻿namespace tictactoe
 {
- 
+
     internal class Board
     {
         char[,] board = new char[3, 3];
@@ -9,11 +9,8 @@
 
 
         public Board() { }
-        public Board(int size)
-        {
-            board = new char[size, size];
-        }
 
+        public char Cell(int x, int y) => board[x, y];
         public void Move(int x, int y, char who)
         {
             if (MoveAvalibe(x, y))
@@ -22,20 +19,7 @@
         }
         public bool MoveAvalibe(int x, int y) => board[x, y] is not 'X' and not 'O';
 
-        static void PrintBoard(char[,] board)
-        {
-            Console.Clear();
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                    Console.WriteLine($"|{board[i, j]}|");
-                Console.WriteLine();
-            }
-        }
 
-        internal Board CreatBoard()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

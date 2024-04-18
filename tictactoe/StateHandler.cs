@@ -5,7 +5,7 @@
         static int selected;
         static int old_selected;
         static bool activate;
-        static public States Menu(ref bool run, ref States last)
+        static public States Menu(ref States last)
         {
 
             activate = false;
@@ -18,8 +18,8 @@
             {
                 selected = 0;
                 old_selected = 0;
-                Draw.DrawMenu();
-                Draw.WriteMenuButtons(main_text_height, buttons, selected);
+                Draw.DrawMenuLogo();
+                Draw.DrawMenuButtons(main_text_height, buttons, selected);
             }
             /*
              * checking for inputs and changeing based on that
@@ -27,22 +27,17 @@
             else
             {
                 old_selected = selected;
-                selected = InputHandler.MenuInputs(selected, ref activate, ref run, 2);
+                selected = InputHandler.MenuInputs(selected, ref activate, 2);
                 if (activate)
-                    switch (selected)
+                    return selected switch
                     {
-                        case 0:
-                            return States.Setup;
-                        case 1:
-                            run = false;
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-
+                        0 => States.Setup,
+                        1 => States.Exit,
+                        _ => throw new NotImplementedException(),
+                    };
                 if (selected != old_selected)
                 {
-                    Draw.WriteMenuButtons(main_text_height, buttons, selected);
+                    Draw.DrawMenuButtons(main_text_height, buttons, selected);
                 }
             }
 
@@ -55,7 +50,7 @@
 
 
 
-        static public States Setup(ref bool runnig, ref States last, ref Board board, out Users[] users)
+        static public States Setup( ref States last, ref Board board, ref GameModes gameMode)
         {
             int main_text_height = 6;
 
@@ -74,26 +69,25 @@
                 activate = false;
                 board = new Board();
                 Draw.DrawSetupLogo();
-                Draw.WriteMenuButtons(main_text_height, buttons, selected);
+                Draw.DrawMenuButtons(main_text_height, buttons, selected);
             }
             else
             {
                 old_selected = selected;
-                selected = InputHandler.MenuInputs(selected, ref activate, ref runnig, 4);
+                selected = InputHandler.MenuInputs(selected, ref activate, 4);
                 if (activate)
                     switch (selected)
                     {
                         case 0:
-                            users = [Users.Player, Users.Player];
+                            gameMode = GameModes.PvP;
                             return States.Running;
                         case 1:
-                            users = [Users.Player, Users.COM];
+                            gameMode = GameModes.PvC;
                             return States.Running;
                         case 2:
-                            users = [Users.COM, Users.COM];
+                            gameMode = GameModes.CvC;
                             return States.Running;
                         case 3:
-                            users = null;
                             return States.Menu;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -101,16 +95,37 @@
 
                 if (selected != old_selected)
                 {
-                    Draw.WriteMenuButtons(main_text_height, buttons, selected);
+                    Draw.DrawMenuButtons(main_text_height, buttons, selected);
                 }
             }
-            users = null;
             last = States.Setup;
             return States.Setup;
         }
 
-        static public States Running(ref bool running, ref States last, ref Board board, Users[] users)
+        static public States Running(ref States last, ref Board board, GameModes gameMode, ref GameModes winner)
         {
+            if (last is not States.Running)
+            {
+                int selected_x = 0, selected_y=0;
+                int old_selected_x=0, old_selected_y = 0;
+                Console.Clear();
+                Draw.DrawGrid(0);
+            }
+            else
+            {
+                selected = InputHandler.MenuInputs(selected, ref activate, 2);
+                if (activate)
+                    return selected switch
+                    {
+                        0 => States.Setup,
+                        1 => States.Exit,
+                        _ => throw new NotImplementedException(),
+                    };
+                if (selected != old_selected)
+                {
+                }
+
+            }
 
             last = States.Running;
             return States.Running;

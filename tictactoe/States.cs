@@ -6,6 +6,8 @@
         Menu,
         Setup,
         Running,
-        Exit
+        Exit,
+        End
+
     }
 }
