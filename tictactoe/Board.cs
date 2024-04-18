@@ -1,5 +1,6 @@
 ﻿namespace tictactoe
 {
+ 
     internal class Board
     {
         char[,] board = new char[3, 3];
@@ -19,7 +20,7 @@
                 board[x, y] = who;
             throw new NotValidMove();
         }
-        public bool MoveAvalibe(int x, int y) => (board[x, y] == 'X' || board[x, y] == 'O') ? false : true;
+        public bool MoveAvalibe(int x, int y) => board[x, y] is not 'X' and not 'O';
 
         static void PrintBoard(char[,] board)
         {

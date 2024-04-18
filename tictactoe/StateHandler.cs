@@ -1,33 +1,38 @@
-﻿namespace tictactoe
+﻿using System.Runtime.InteropServices;
+
+namespace tictactoe
 {
     static internal class StateHandler
     {
-        static int cursor_pos;
-        static int old_cursor_pos;
-        static public States Menu(ref bool run, States last)
+        static int selected;
+        static int old_selected;
+        static bool activate;
+        static public States Menu(ref bool run,ref States last)
         {
-            bool activate = false;
+            
+            activate = false;
+            int main_text_height = 6;
+            string[] buttons = ["Start Game", "Quit"];
             /*
              *  Seting up menu
              */
             if (last is not States.Menu)
             {
-                cursor_pos = 0;
-                old_cursor_pos = 0;
-
+                selected = 0;
+                old_selected = 0;
+                Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 //Slant font
                 Console.WriteLine(
-                    "\t    __  ____           _____                                  \r\n" +
-                    "\t   /  |/  (_)___  ___ / ___/      _____  ___  ____  ___  _____\r\n" +
-                    "\t  / /|_/ / / __ \\/ _ \\\\__ \\ | /| / / _ \\/ _ \\/ __ \\/ _ \\/ ___/\r\n" +
-                    "\t / /  / / / / / /  __/__/ / |/ |/ /  __/  __/ /_/ /  __/ /    \r\n" +
-                    "\t/_/  /_/_/_/ /_/\\___/____/|__/|__/\\___/\\___/ .___/\\___/_/     \r\n" +
-                    "\t                                          /_/                 "
+                    "___________.__     ___________           ___________            \r\n" +
+                    "\\__    ___/|__| ___\\__    ___/____    ___\\__    ___/___   ____  \r\n" +
+                    "  |    |   |  |/ ___\\|    |  \\__  \\ _/ ___\\|    | /  _ \\_/ __ \\ \r\n" +
+                    "  |    |   |  \\  \\___|    |   / __ \\\\  \\___|    |(  <_> )  ___/ \r\n" +
+                    "  |____|   |__|\\___  >____|  (____  /\\___  >____| \\____/ \\___  >\r\n" +
+                    "                   \\/             \\/     \\/                  \\/ "
                     );
 
-                WriteMenuButtons(cursor_pos);
-
+                WriteMenuButtons(main_text_height + 2, buttons, selected);
 
             }
             /*
@@ -35,42 +40,24 @@
              */
             else
             {
-                old_cursor_pos = cursor_pos;
-                //Handelig inputs
-                cursor_pos = InputHandler.MenuInputs(cursor_pos, ref activate, ref run);
-                if (activate && cursor_pos == 0)
+                old_selected = selected;
+                selected = InputHandler.MenuInputs(selected, ref activate, ref run, 2);
+                if (activate && selected == 0)
                 {
                     return States.Setup;
                 }
-                else if (activate && cursor_pos == 1)
+                else if (activate && selected == 1)
                     run = false;
-                if (cursor_pos != old_cursor_pos)
+                if (selected != old_selected)
                 {
-                    WriteMenuButtons(cursor_pos);
-                    old_cursor_pos = cursor_pos;
+                    WriteMenuButtons(main_text_height + 2, buttons, selected);
                 }
             }
 
+            last = States.Menu;
             return States.Menu;
 
-            static void WriteMenuButtons(int cursor_pos)
-            {
-                //10th line in console
-                if (cursor_pos == 0)
-                    SetColors(ConsoleColor.White, ConsoleColor.Black);
-                Console.SetCursorPosition(2, 7);
-                Console.Write("Start Game");
 
-                Console.ResetColor();
-
-                if (cursor_pos == 1)
-                    SetColors(ConsoleColor.White, ConsoleColor.Black);
-                Console.SetCursorPosition(2, 9);
-                //12th line in console
-                Console.Write("Quit");
-
-                Console.ResetColor();
-            }
         }
 
 
@@ -80,31 +67,86 @@
             Console.ForegroundColor = fg;
         }
 
-        static public States Setup(ref bool runnig, States last)
+        static public States Setup(ref bool runnig,ref States last, ref Board board, out Users[] users)
         {
+            int main_text_height = 6;
+
+
+
+            string[] buttons = [
+                "Player VS Player",
+                "Player VS Com" ,
+                "Com VS Com",
+                "Back To Menu"];
+
             if (last is not States.Setup)
             {
-                Board board = new Board();
-            }
-            else 
-            {
-            
-            }
+                selected = 0;
+                old_selected = 0;
+                activate = false;
+                board = new Board();
 
+                Console.Clear();
+                Console.WriteLine(
+                    "  _________       __                \r\n" +
+                    " /   _____/ _____/  |_ __ ________  \r\n" +
+                    " \\_____  \\_/ __ \\   __\\  |  \\____ \\ \r\n" +
+                    " /        \\  ___/|  | |  |  /  |_> >\r\n" +
+                    "/_______  /\\___  >__| |____/|   __/ \r\n" +
+                    "        \\/     \\/           |__|    ");
+                WriteMenuButtons(main_text_height, buttons, selected);
+
+            }
+            else
+            {
+                old_selected = selected;
+                selected = InputHandler.MenuInputs(selected, ref activate, ref runnig, 4);
+                if (activate)
+                    switch (selected)
+                    {
+                        case 0:
+                            users = [Users.Player, Users.Player];
+                            return States.Running;
+                        case 1:
+                            users = [Users.Player, Users.COM];
+                            return States.Running;
+                        case 2:
+                            users = [Users.COM, Users.COM];
+                            return States.Running;
+                        case 3:
+                            users = null;
+                            return States.Menu;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                if (selected != old_selected)
+                {
+                    WriteMenuButtons(main_text_height, buttons, selected);
+                }
+            }
+            users = null;
+            last = States.Setup;
+            return States.Setup;
+        }
+
+        static public States Running(ref bool running,ref States last, ref Board board, Users[] users)
+        {
+
+            last = States.Running;
             return States.Running;
         }
-
-        /*
-      static public States Running(Board board, Users[] users, ref States last)
+        static void WriteMenuButtons(int start_selected, string[] button_texts, int selected)
         {
-            do
+            for (int i = 0; i < button_texts.Length; i++)
             {
+                if (i == selected)
+                    SetColors(ConsoleColor.White, ConsoleColor.Black);
+                Console.SetCursorPosition(2, start_selected + (2 * (i + 1)));
+                Console.WriteLine(button_texts[i]);
+                Console.ResetColor();
 
-            } while (board.MovesAvalible);
-            return States.Menu;
-
-
+            }
         }
-      */
     }
 }
