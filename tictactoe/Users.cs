@@ -3,6 +3,6 @@
     internal enum Users
     {
         Player,
-        COM,
+        COM
     }
 }

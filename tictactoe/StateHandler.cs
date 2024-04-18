@@ -18,7 +18,7 @@
             {
                 selected = 0;
                 old_selected = 0;
-                Draw.DrawMenu();
+                Draw.DrawMenuLogo();
                 Draw.WriteMenuButtons(main_text_height, buttons, selected);
             }
             /*

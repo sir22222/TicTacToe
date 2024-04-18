@@ -14,7 +14,7 @@
                 "/_______  /\\___  >__| |____/|   __/ \r\n" +
                 "        \\/     \\/           |__|    ");
         }
-        static public void DrawMenu()
+        static public void DrawMenuLogo()
         {
             Console.Clear();
             Console.WriteLine(
@@ -26,6 +26,7 @@
                 "                   \\/             \\/     \\/                  \\/ "
                 );
         }
+
         static public void WriteMenuButtons(int start_selected, string[] button_texts, int selected)
         {
             for (int i = 0; i < button_texts.Length; i++)

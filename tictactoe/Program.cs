@@ -17,13 +17,13 @@
                 {
                     case States.Start:
                     case States.Menu:
-                        game_state = StateHandler.Menu(ref running,ref last_game_state);
+                        game_state = StateHandler.Menu(ref running, ref last_game_state);
                         break;
                     case States.Setup:
-                        game_state = StateHandler.Setup(ref running,ref last_game_state, ref board, out users);
+                        game_state = StateHandler.Setup(ref running, ref last_game_state, ref board, out users);
                         break;
                     case States.Running:
-                        game_state = StateHandler.Running(ref running,ref last_game_state, ref board,users);
+                        game_state = StateHandler.Running(ref running, ref last_game_state, ref board, users);
                         break;
                     default:
                         break;

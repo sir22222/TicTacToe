@@ -1,6 +1,6 @@
 ﻿namespace tictactoe
 {
- 
+
     internal class Board
     {
         char[,] board = new char[3, 3];

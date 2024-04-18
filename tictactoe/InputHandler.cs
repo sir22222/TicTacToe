@@ -16,7 +16,7 @@
 
                 case ConsoleKey.RightArrow:
                 case ConsoleKey.UpArrow:
-                    return Math.Abs((position - 1+4) % button_count);
+                    return Math.Abs((position - 1 + 4) % button_count);
                 case ConsoleKey.Escape:
                 case ConsoleKey.Q:
                     running = false;
@@ -26,7 +26,7 @@
             }
             return position;
         }
-        
+
 
     }
 }
