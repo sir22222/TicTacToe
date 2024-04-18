@@ -1,15 +1,13 @@
-﻿using System.Runtime.InteropServices;
-
-namespace tictactoe
+﻿namespace tictactoe
 {
     static internal class StateHandler
     {
         static int selected;
         static int old_selected;
         static bool activate;
-        static public States Menu(ref bool run,ref States last)
+        static public States Menu(ref bool run, ref States last)
         {
-            
+
             activate = false;
             int main_text_height = 6;
             string[] buttons = ["Start Game", "Quit"];
@@ -20,20 +18,8 @@ namespace tictactoe
             {
                 selected = 0;
                 old_selected = 0;
-                Console.Clear();
-                Console.SetCursorPosition(0, 0);
-                //Slant font
-                Console.WriteLine(
-                    "___________.__     ___________           ___________            \r\n" +
-                    "\\__    ___/|__| ___\\__    ___/____    ___\\__    ___/___   ____  \r\n" +
-                    "  |    |   |  |/ ___\\|    |  \\__  \\ _/ ___\\|    | /  _ \\_/ __ \\ \r\n" +
-                    "  |    |   |  \\  \\___|    |   / __ \\\\  \\___|    |(  <_> )  ___/ \r\n" +
-                    "  |____|   |__|\\___  >____|  (____  /\\___  >____| \\____/ \\___  >\r\n" +
-                    "                   \\/             \\/     \\/                  \\/ "
-                    );
-
-                WriteMenuButtons(main_text_height + 2, buttons, selected);
-
+                Draw.DrawMenu();
+                Draw.WriteMenuButtons(main_text_height, buttons, selected);
             }
             /*
              * checking for inputs and changeing based on that
@@ -42,15 +28,21 @@ namespace tictactoe
             {
                 old_selected = selected;
                 selected = InputHandler.MenuInputs(selected, ref activate, ref run, 2);
-                if (activate && selected == 0)
-                {
-                    return States.Setup;
-                }
-                else if (activate && selected == 1)
-                    run = false;
+                if (activate)
+                    switch (selected)
+                    {
+                        case 0:
+                            return States.Setup;
+                        case 1:
+                            run = false;
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+
                 if (selected != old_selected)
                 {
-                    WriteMenuButtons(main_text_height + 2, buttons, selected);
+                    Draw.WriteMenuButtons(main_text_height, buttons, selected);
                 }
             }
 
@@ -61,13 +53,9 @@ namespace tictactoe
         }
 
 
-        static void SetColors(ConsoleColor bg, ConsoleColor fg)
-        {
-            Console.BackgroundColor = bg;
-            Console.ForegroundColor = fg;
-        }
 
-        static public States Setup(ref bool runnig,ref States last, ref Board board, out Users[] users)
+
+        static public States Setup(ref bool runnig, ref States last, ref Board board, out Users[] users)
         {
             int main_text_height = 6;
 
@@ -85,17 +73,8 @@ namespace tictactoe
                 old_selected = 0;
                 activate = false;
                 board = new Board();
-
-                Console.Clear();
-                Console.WriteLine(
-                    "  _________       __                \r\n" +
-                    " /   _____/ _____/  |_ __ ________  \r\n" +
-                    " \\_____  \\_/ __ \\   __\\  |  \\____ \\ \r\n" +
-                    " /        \\  ___/|  | |  |  /  |_> >\r\n" +
-                    "/_______  /\\___  >__| |____/|   __/ \r\n" +
-                    "        \\/     \\/           |__|    ");
-                WriteMenuButtons(main_text_height, buttons, selected);
-
+                Draw.DrawSetupLogo();
+                Draw.WriteMenuButtons(main_text_height, buttons, selected);
             }
             else
             {
@@ -122,7 +101,7 @@ namespace tictactoe
 
                 if (selected != old_selected)
                 {
-                    WriteMenuButtons(main_text_height, buttons, selected);
+                    Draw.WriteMenuButtons(main_text_height, buttons, selected);
                 }
             }
             users = null;
@@ -130,23 +109,12 @@ namespace tictactoe
             return States.Setup;
         }
 
-        static public States Running(ref bool running,ref States last, ref Board board, Users[] users)
+        static public States Running(ref bool running, ref States last, ref Board board, Users[] users)
         {
 
             last = States.Running;
             return States.Running;
         }
-        static void WriteMenuButtons(int start_selected, string[] button_texts, int selected)
-        {
-            for (int i = 0; i < button_texts.Length; i++)
-            {
-                if (i == selected)
-                    SetColors(ConsoleColor.White, ConsoleColor.Black);
-                Console.SetCursorPosition(2, start_selected + (2 * (i + 1)));
-                Console.WriteLine(button_texts[i]);
-                Console.ResetColor();
 
-            }
-        }
     }
 }
