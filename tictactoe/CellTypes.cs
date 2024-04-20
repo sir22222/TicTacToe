@@ -8,6 +8,7 @@ namespace tictactoe
 {
     internal enum CellTypes
     {
+        None = 0,
         X,
         O,
         vertical_wall,

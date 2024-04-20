@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace tictactoe
+﻿namespace tictactoe
 {
     internal static class Draw
     {
@@ -34,10 +31,6 @@ namespace tictactoe
             Console.ResetColor();
         }
 
-        static public void DrawGameScreen()
-        {
-
-        }
 
         static public void DrawMenuButtons(int start_selected, string[] button_texts, int selected)
         {
@@ -65,73 +58,114 @@ namespace tictactoe
             Console.Clear();
         }
 
-        static public void DrawGrid(int verical_offset) 
+        static public void DrawGrid() 
         {
             int v_pos = 0, h_pos = 0;
-            DrawCell(CellTypes.top_left_corner,v_pos+verical_offset,h_pos+=5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.T_intersection_top, v_pos + verical_offset,h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall,v_pos +verical_offset,h_pos += 5);
-            DrawCell(CellTypes.T_intersection_top, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.top_right_corner, v_pos + verical_offset, h_pos+=5);
+            DrawCell(CellTypes.top_left_corner,v_pos,h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos += 5;
+            DrawCell(CellTypes.T_intersection_top, v_pos ,h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall,v_pos ,h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.T_intersection_top, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.top_right_corner, v_pos , h_pos);
             
             v_pos += 5;
             h_pos = 0;
 
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
 
             v_pos += 5;
             h_pos = 0;
 
-            DrawCell(CellTypes.T_intersection_left, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.inside_intersection, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.inside_intersection, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.T_intersection_right, v_pos + verical_offset, h_pos += 5);
+            DrawCell(CellTypes.T_intersection_left, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.inside_intersection, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.inside_intersection, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.T_intersection_right, v_pos , h_pos);
 
             v_pos += 5;
             h_pos = 0;
 
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos += 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
 
             v_pos += 5;
             h_pos = 0;
 
-            DrawCell(CellTypes.T_intersection_left, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.inside_intersection, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.inside_intersection, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.T_intersection_right, v_pos + verical_offset, h_pos += 5);
+            DrawCell(CellTypes.T_intersection_left, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.inside_intersection, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.inside_intersection, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.T_intersection_right, v_pos , h_pos);
 
             v_pos += 5;
             h_pos = 0;
 
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
-            DrawCell(CellTypes.vertical_wall, v_pos + verical_offset, h_pos += 10);
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos+= 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos+= 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
+            h_pos+= 10;
+            DrawCell(CellTypes.vertical_wall, v_pos , h_pos);
 
             v_pos += 5;
             h_pos = 0;
-            DrawCell(CellTypes.bottom_left_corner, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.T_intersection_bottom, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.T_intersection_bottom, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.horizontal_wall, v_pos + verical_offset, h_pos += 5);
-            DrawCell(CellTypes.bottom_right_corner, v_pos + verical_offset, h_pos += 5);
+            DrawCell(CellTypes.bottom_left_corner, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.T_intersection_bottom, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.T_intersection_bottom, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.horizontal_wall, v_pos , h_pos);
+            h_pos+= 5;
+            DrawCell(CellTypes.bottom_right_corner, v_pos , h_pos);
         }
+        static public void DrawCell(CellTypes c, int start_x_pos, int start_y_pos, bool selected)
+        { 
+            if (selected) SetColors(fg: ConsoleColor.DarkYellow, bg:ConsoleColor.Yellow);
+            DrawCell(c, start_x_pos, start_y_pos);
+            Console.ResetColor();
+        }
+
 
         static public void DrawCell(CellTypes c, int start_x_pos, int start_y_pos)
         {
@@ -140,27 +174,27 @@ namespace tictactoe
                 #region played moves
                 case CellTypes.X:
                     Console.SetCursorPosition(start_y_pos, start_x_pos);
-                    Console.Write("x   x");
+                    Console.Write("x...x");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" x x ");
+                    Console.Write(".x.x.");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("  x  ");
+                    Console.Write("..x..");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" x x ");
+                    Console.Write(".x.x.");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("x   x");
+                    Console.Write("x...x");
                     break;
                 case CellTypes.O:
                     Console.SetCursorPosition(start_y_pos, start_x_pos);
-                    Console.Write("  x  ");
+                    Console.Write("..x..");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" x x ");
+                    Console.Write(".x.x.");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("x   x");
+                    Console.Write("x...x");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" x x ");
+                    Console.Write(".x.x.");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("  x  ");
+                    Console.Write("..x..");
                     break;
                 #endregion
                 #region walls
@@ -189,13 +223,13 @@ namespace tictactoe
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
                     Console.Write(" +++-");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" ||| ");
+                    Console.Write(" |||.");
                     break;
                 case CellTypes.bottom_left_corner:
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(" |||.");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(" |||.");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
                     Console.Write(" +++-");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
@@ -208,13 +242,13 @@ namespace tictactoe
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
                     Console.Write("-+++");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" ||| ");
+                    Console.Write(".||| ");
                     break;
                 case CellTypes.bottom_right_corner:
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(".||| ");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(".||| ");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
                     Console.Write("-+++");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
@@ -229,13 +263,13 @@ namespace tictactoe
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
                     Console.Write("-+++-");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(" ||| ");
+                    Console.Write(".|||.");
                     break;
                 case CellTypes.T_intersection_bottom:
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(".|||.");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
-                    Console.Write(" ||| ");
+                    Console.Write(".|||.");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);
                     Console.Write("-+++-");
                     Console.SetCursorPosition(start_y_pos, start_x_pos++);

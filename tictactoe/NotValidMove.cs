@@ -16,10 +16,5 @@ namespace tictactoe
         public NotValidMove(string? message, Exception? innerException) : base(message, innerException)
         {
         }
-
-
-        protected NotValidMove(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }
