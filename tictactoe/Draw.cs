@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace tictactoe
+﻿namespace tictactoe
 {
     internal static class Draw
     {
