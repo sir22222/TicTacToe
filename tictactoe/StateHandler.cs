@@ -4,7 +4,6 @@
     {
         static int selected, old_selected;
         static bool activate;
-        static int selected_x, selected_y = 0, old_selected_x, old_selected_y;
         static public States Menu(ref States last)
         {
 
@@ -102,46 +101,75 @@
             return States.Setup;
         }
 
-        static public States Running(ref States last, ref Board board, GameModes gameMode, ref GameModes winner)
+        static public States Running(ref States last, ref Board board, GameModes gameMode, ref CellTypes winner)
         {
             if (last is not States.Running)
             {
-                selected_x = 0; selected_y = 0;
-                old_selected_x = 0; old_selected_y = 0;
+
                 activate = false;
+                winner = CellTypes.None;
                 Console.Clear();
                 Draw.DrawGrid();
-                Draw.DrawCell(board.Cell(0, 0), 5, 5);
+                Draw.DrawCell(board.Cell(0, 0), 5, 5,true);
+                last = States.Running;
             }
             else
             {
-                if (InputHandler.MenuInputs(ref selected_x, ref selected_y, ref activate, 3, 3))
+                switch (gameMode)
                 {
-                    last = States.Running;
-                    return States.Running;
-                }
-                if (activate) 
-                {
-                    try
-                    {
-                        board.PlayCell(selected_x, selected_y, CellTypes.X);
-                    }
-                    catch (NotValidMove)
-                    {
-                        Draw.DrawCell(board.Cell(selected_x, selected_y), (selected_x * 10)+5, (selected_y *10 )+5);
-                    }
-                    activate = false;
-                }
+                    case GameModes.PvP:
+                        while(!PLayer.PLay(CellTypes.X,board));
+                        if(board.SomeOneWon(CellTypes.X) )
+                        {
+                            winner = CellTypes.X;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;
+                        while(!PLayer.PLay(CellTypes.O,board));
+                        if(board.SomeOneWon(CellTypes.O) )
+                        {
+                            winner = CellTypes.O;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;
 
-                if (selected_x != old_selected_x|| selected_y != old_selected_y)
-                {
-                    Draw.DrawCell(board.Cell(selected_x,selected_y),(selected_x*10)+5,(selected_y*10)+5);
-                    Draw.DrawCell(board.Cell(old_selected_x, old_selected_y), (old_selected_x * 10) + 5, (old_selected_y * 10) + 5);
+                        break;
+                    case GameModes.PvC:
+                        while(!PLayer.PLay(CellTypes.X,board));
+                        if(board.SomeOneWon(CellTypes.X) )
+                        {
+                            winner = CellTypes.X;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;
+                        COM.Play(CellTypes.O,board);
+                        if(board.SomeOneWon(CellTypes.O) )
+                        {
+                            winner = CellTypes.O;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;
+                        break;
+                    case GameModes.CvC:
+                        COM.Play(CellTypes.X,board);
+                        if(board.SomeOneWon(CellTypes.X) )
+                        {
+                            winner = CellTypes.X;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;COM.Play(CellTypes.O,board);
+                        if(board.SomeOneWon(CellTypes.O) )
+                        {
+                            winner = CellTypes.O;
+                            return States.End;
+                        }
+                        if(!board.MovesAvalible())return States.End;
+                        break;
+
                 }
 
             }
 
-            last = States.Running;
             return States.Running;
         }
 

@@ -9,7 +9,7 @@
                 last_game_state = States.Start;
             Board board = new();
             GameModes gameMode = GameModes.None;
-            GameModes winner = new();
+            CellTypes winner = new();
 
 
             while (game_state is not States.Exit)

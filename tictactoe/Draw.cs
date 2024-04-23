@@ -37,7 +37,7 @@
             for (int i = 0; i < button_texts.Length; i++)
             {
                 if (i == selected)
-                    SetColors(ConsoleColor.White, ConsoleColor.Black);
+                    SetColors(bg: ConsoleColor.Gray, fg:ConsoleColor.White);
                 Console.SetCursorPosition(2, start_selected + (2 * (i + 1)));
                 Console.WriteLine(button_texts[i]);
                 Console.ResetColor();
@@ -57,7 +57,7 @@
         {
             Console.Clear();
         }
-
+#region Grid
         static public void DrawGrid() 
         {
             int v_pos = 0, h_pos = 0;
@@ -159,9 +159,11 @@
             h_pos+= 5;
             DrawCell(CellTypes.bottom_right_corner, v_pos , h_pos);
         }
+        #endregion
         static public void DrawCell(CellTypes c, int start_x_pos, int start_y_pos, bool selected)
         { 
-            if (selected) SetColors(fg: ConsoleColor.DarkYellow, bg:ConsoleColor.Yellow);
+            if (selected) SetColors(fg: ConsoleColor.White, bg:ConsoleColor.Gray);
+            if(c is CellTypes.X or CellTypes.O) SetColors(fg: ConsoleColor.White, bg:ConsoleColor.Red);
             DrawCell(c, start_x_pos, start_y_pos);
             Console.ResetColor();
         }
@@ -171,18 +173,25 @@
         {
             switch (c)
             {
+                case CellTypes.None:
+                    for (int i = 0; i < 5; i++)
+                    {
+                    Console.SetCursorPosition(start_y_pos, start_x_pos++);
+                    Console.Write("    ");
+                    }
+                break;  
                 #region played moves
                 case CellTypes.X:
                     Console.SetCursorPosition(start_y_pos, start_x_pos);
-                    Console.Write("x...x");
+                    Console.Write("x   x");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(".x.x.");
+                    Console.Write(" x x ");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("..x..");
+                    Console.Write("  x  ");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write(".x.x.");
+                    Console.Write(" x x ");
                     Console.SetCursorPosition(start_y_pos, ++start_x_pos);
-                    Console.Write("x...x");
+                    Console.Write("x   x");
                     break;
                 case CellTypes.O:
                     Console.SetCursorPosition(start_y_pos, start_x_pos);
