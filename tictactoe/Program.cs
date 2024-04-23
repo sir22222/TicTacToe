@@ -27,6 +27,9 @@
                     case States.Running:
                         game_state = StateHandler.Running(ref last_game_state, ref board, gameMode, ref winner);
                         break;
+                    case States.End:
+                        game_state = StateHandler.End(ref gameMode,ref winner);
+                        break;
                     default:
                         break;
                 }

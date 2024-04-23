@@ -4,7 +4,6 @@
     internal class Board
     {
         CellTypes[,] board = new CellTypes[3, 3];
-        private bool movesAvalible;
         public bool MovesAvalible (){
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
@@ -12,7 +11,6 @@
                         return true;
             return false;
               }
-
 
 
         public CellTypes Cell(int x, int y) => board[x, y];

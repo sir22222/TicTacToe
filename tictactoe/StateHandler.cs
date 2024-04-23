@@ -173,5 +173,14 @@
             return States.Running;
         }
 
+        static public States End(ref GameModes gm,ref CellTypes winner)
+        {
+            Console.Clear();
+            System.Console.WriteLine(Converter.CellTypeToWinnerText(winner));
+            System.Console.WriteLine("Press Enter To Go back to the menu.");
+            PLayer.Reset();
+            System.Console.ReadLine();
+            return States.Menu;
+        }
     }
 }

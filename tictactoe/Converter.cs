@@ -17,5 +17,15 @@ namespace tictactoe
                 _ => throw new ArgumentException(),
             };
         }
+        public static string CellTypeToWinnerText(CellTypes c)
+        {
+            return c switch
+            {
+                CellTypes.X=> "X won",
+                CellTypes.O=> "O won",
+                CellTypes.None=> "It was a draw",
+                _ => throw new ArgumentException(),
+            };
+        }
     }
 }

@@ -22,7 +22,8 @@ namespace tictactoe
                     }
                     catch (NotValidMove)
                     {
-                        Draw.DrawCell(board.Cell(selected_x, selected_y), (selected_x * 10)+5, (selected_y *10 )+5);
+                        activate = false;
+                        return false;
                     }
                     Draw.DrawCell(board.Cell(selected_x,selected_y),(selected_x*10)+5,(selected_y*10)+5,true);
                     activate = false;
@@ -38,6 +39,13 @@ namespace tictactoe
                 }
 
             return false;
+        }
+        public static void Reset(){
+
+                    selected_x = 0;
+                    selected_y = 0; 
+                    old_selected_x = 0;
+                    old_selected_y = 0;
         }
 
     }
